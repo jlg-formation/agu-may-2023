@@ -1,13 +1,18 @@
 import express from "express";
+import { NextFunction } from "express";
+import { Response } from "express";
+import { Request } from "express";
 import serveIndex from "serve-index";
 
 const app = express();
 const port = 3000;
 
-app.use((req, res, next) => {
+const logger = (req: Request, res: Response, next: NextFunction) => {
   console.log("req: ", req.url, req.method);
   next();
-});
+};
+
+app.use(logger);
 
 app.use(express.static("."));
 app.use(serveIndex(".", { icons: true }));
