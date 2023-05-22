@@ -3,6 +3,7 @@ import { NextFunction } from "express";
 import { Response } from "express";
 import { Request } from "express";
 import serveIndex from "serve-index";
+import { api } from "./api";
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,8 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 };
 
 app.use(logger);
+
+app.use("/api", api);
 
 app.use(express.static("."));
 app.use(serveIndex(".", { icons: true }));
