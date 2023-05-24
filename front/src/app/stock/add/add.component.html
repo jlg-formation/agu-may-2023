@@ -10,10 +10,12 @@
             Champ requis.
           </span>
           <span *ngIf="f.controls.name.errors?.['maxlength']">
-            Champ trop long.
+            Trop long. ({{ f.controls.name.errors?.['maxlength'].actualLength}}
+            > {{ f.controls.name.errors?.['maxlength'].requiredLength}})
           </span>
           <span *ngIf="f.controls.name.errors?.['minlength']">
-            Champ trop court.
+            Trop court. ({{ f.controls.name.errors?.['minlength'].actualLength}}
+            < {{ f.controls.name.errors?.['minlength'].requiredLength}})
           </span>
         </span>
       </span>
