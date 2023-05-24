@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../interfaces/article';
-import { BehaviorSubject } from 'rxjs';
+import { Article, NewArticle } from '../interfaces/article';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +12,27 @@ export class ArticleService {
   ];
 
   articles$ = new BehaviorSubject<Article[]>(this.articles);
+
   constructor() {}
+
+  add(newArticle: NewArticle): Observable<void> {
+    return of(undefined).pipe(
+      tap(() => {
+        const article: Article = { ...newArticle, id: generateId() };
+        this.articles.push(article);
+      })
+    );
+  }
+
+  refresh(): Observable<void> {
+    return of(undefined).pipe(
+      tap(() => {
+        this.articles$.next(this.articles);
+      })
+    );
+  }
 }
+
+const generateId = (): string => {
+  return (Math.random() * 1e12).toFixed(0);
+};

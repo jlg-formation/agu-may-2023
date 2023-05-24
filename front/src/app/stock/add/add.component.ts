@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { of, switchMap } from 'rxjs';
+import { NewArticle } from 'src/app/interfaces/article';
+import { ArticleService } from 'src/app/services/article.service';
 
 @Component({
   selector: 'app-add',
@@ -20,12 +23,29 @@ export class AddComponent {
   });
   faPlus = faPlus;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private articleService: ArticleService
+  ) {
     console.log('router: ', router);
   }
 
   submit() {
-    console.log('submit');
-    this.router.navigate(['..'], { relativeTo: this.route });
+    of(undefined)
+      .pipe(
+        switchMap(() => {
+          console.log('submit');
+          const newArticle = this.f.value as NewArticle;
+          return this.articleService.add(newArticle);
+        }),
+        switchMap(() => {
+          return this.articleService.refresh();
+        }),
+        switchMap(() => {
+          return this.router.navigate(['..'], { relativeTo: this.route });
+        })
+      )
+      .subscribe();
   }
 }
