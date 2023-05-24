@@ -13,8 +13,11 @@ form {
       padding: 0.5em 1em;
     }
 
-    div.error {
-      height: 1em;
+    .error {
+      display: flex;
+      height: 1.2em;
+      overflow-y: hidden;
+      font-weight: bold;
     }
   }
 

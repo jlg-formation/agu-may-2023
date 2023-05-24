@@ -4,17 +4,29 @@
     <label>
       <span>Nom</span>
       <input type="text" formControlName="name" />
-      <div class="error"></div>
+      <span class="error">
+        <span *ngIf="f.controls.name.touched && f.controls.name.invalid">
+          <span *ngIf="f.controls.name.errors?.['required']">
+            Champ requis.
+          </span>
+          <span *ngIf="f.controls.name.errors?.['maxlength']">
+            Champ trop long.
+          </span>
+          <span *ngIf="f.controls.name.errors?.['minlength']">
+            Champ trop court.
+          </span>
+        </span>
+      </span>
     </label>
     <label>
       <span>Prix</span>
       <input type="number" formControlName="price" />
-      <div class="error"></div>
+      <span class="error"></span>
     </label>
     <label>
       <span>Quantité</span>
       <input type="number" formControlName="qty" />
-      <div class="error"></div>
+      <span class="error"></span>
     </label>
     <div class="error"></div>
     <button class="primary">
@@ -23,4 +35,5 @@
     </button>
   </form>
   {{ f.value | json }}
+  {{ f.controls.name.errors | json }}
 </main>
