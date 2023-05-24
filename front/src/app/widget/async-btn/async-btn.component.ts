@@ -22,6 +22,8 @@ export class AsyncBtnComponent {
 
   isRunning = false;
 
+  faCircleNotch = faCircleNotch;
+
   run() {
     of(undefined)
       .pipe(
