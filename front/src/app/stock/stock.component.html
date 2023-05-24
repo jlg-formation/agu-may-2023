@@ -6,6 +6,7 @@
         title="Rafraîchir"
         [icon]="faRotateRight"
         (error)="setErrorMsg($event)"
+        [action]="refresh()"
       ></app-async-btn>
       <a routerLink="add" class="button" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>

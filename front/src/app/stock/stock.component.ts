@@ -14,13 +14,22 @@ import { Observable, delay, of, switchMap, tap, throwError } from 'rxjs';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
+  errorMsg = '';
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
-  errorMsg = '';
 
   constructor(protected articleService: ArticleService) {}
+
+  refresh(): Observable<void> {
+    return of(undefined).pipe(
+      delay(300),
+      switchMap(() => {
+        return this.articleService.refresh();
+      })
+    );
+  }
 
   remove(): Observable<void> {
     return of(undefined).pipe(
@@ -32,6 +41,9 @@ export class StockComponent {
       }),
       switchMap(() => {
         return this.articleService.refresh();
+      }),
+      tap(() => {
+        this.selectedArticles.clear();
       })
     );
   }
