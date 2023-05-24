@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -19,7 +20,12 @@ export class AddComponent {
   });
   faPlus = faPlus;
 
+  constructor(private router: Router, private route: ActivatedRoute) {
+    console.log('router: ', router);
+  }
+
   submit() {
     console.log('submit');
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 }
