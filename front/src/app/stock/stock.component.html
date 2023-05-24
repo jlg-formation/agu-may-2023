@@ -11,9 +11,12 @@
         [icon]="faTrashAlt"
         [hidden]="selectedArticles.size === 0"
         [action]="remove()"
+        (error)="setErrorMsg($event)"
       ></app-async-btn>
     </nav>
-    <div class="error"></div>
+    <div class="error">
+      {{ errorMsg }}
+    </div>
     <table>
       <thead>
         <tr>

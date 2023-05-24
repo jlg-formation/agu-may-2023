@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
-import { Observable, delay, of, tap } from 'rxjs';
+import { Observable, delay, of, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -18,6 +18,7 @@ export class StockComponent {
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
+  errorMsg = '';
 
   constructor(protected articleService: ArticleService) {}
 
@@ -26,6 +27,7 @@ export class StockComponent {
       delay(2000),
       tap(() => {
         console.log('remove');
+        throw new Error('Suppression impossible');
       })
     );
   }
@@ -36,5 +38,9 @@ export class StockComponent {
       return;
     }
     this.selectedArticles.add(a);
+  }
+
+  setErrorMsg(errorMsg: string) {
+    this.errorMsg = errorMsg;
   }
 }

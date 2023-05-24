@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   IconDefinition,
   faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, finalize, of, switchMap } from 'rxjs';
+import { Observable, catchError, finalize, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-async-btn',
@@ -20,6 +20,9 @@ export class AsyncBtnComponent {
   @Input()
   action: Observable<void> = of(undefined);
 
+  @Output()
+  error = new EventEmitter<string>();
+
   isRunning = false;
 
   faCircleNotch = faCircleNotch;
@@ -30,6 +33,11 @@ export class AsyncBtnComponent {
         switchMap(() => {
           this.isRunning = true;
           return this.action;
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          this.error.emit(err.message);
+          return of(undefined);
         }),
         finalize(() => {
           this.isRunning = false;
