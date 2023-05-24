@@ -32,6 +32,7 @@ export class AsyncBtnComponent {
       .pipe(
         switchMap(() => {
           this.isRunning = true;
+          this.error.emit('');
           return this.action;
         }),
         catchError((err) => {
