@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,4 +9,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class AddComponent {
   faPlus = faPlus;
+
+  f = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+    price: new FormControl(0, [Validators.required, Validators.min(0)]),
+    qty: new FormControl(0, [Validators.required, Validators.min(0)]),
+  });
 }

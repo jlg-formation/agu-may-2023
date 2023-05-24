@@ -1,19 +1,19 @@
 <main>
   <h1>Ajout d'un article</h1>
-  <form>
+  <form [formGroup]="f">
     <label>
       <span>Nom</span>
-      <input type="text" />
+      <input type="text" formControlName="name" />
       <div class="error"></div>
     </label>
     <label>
       <span>Prix</span>
-      <input type="number" />
+      <input type="number" formControlName="price" />
       <div class="error"></div>
     </label>
     <label>
       <span>Quantité</span>
-      <input type="number" />
+      <input type="number" formControlName="qty" />
       <div class="error"></div>
     </label>
     <div class="error"></div>
@@ -22,4 +22,5 @@
       <span>Ajouter</span>
     </button>
   </form>
+  {{ f.value | json }}
 </main>
