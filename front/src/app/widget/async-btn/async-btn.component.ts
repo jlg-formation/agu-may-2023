@@ -3,7 +3,7 @@ import {
   IconDefinition,
   faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, of } from 'rxjs';
+import { Observable, finalize, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-async-btn',
@@ -19,4 +19,20 @@ export class AsyncBtnComponent {
 
   @Input()
   action: Observable<void> = of(undefined);
+
+  isRunning = false;
+
+  run() {
+    of(undefined)
+      .pipe(
+        switchMap(() => {
+          this.isRunning = true;
+          return this.action;
+        }),
+        finalize(() => {
+          this.isRunning = false;
+        })
+      )
+      .subscribe();
+  }
 }
