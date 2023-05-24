@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
-import { BehaviorSubject, Observable, delay, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,6 @@ export class ArticleService {
 
   add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
-      delay(2000),
       tap(() => {
         if (newArticle.name === 'Trucxxx') {
           throw new Error(`Oups... Trucxxx interdit...`);
@@ -32,6 +31,14 @@ export class ArticleService {
     return of(undefined).pipe(
       tap(() => {
         this.articles$.next(this.articles);
+      })
+    );
+  }
+
+  remove(ids: string[]): Observable<void> {
+    return of(undefined).pipe(
+      tap(() => {
+        this.articles = this.articles.filter((a) => !ids.includes(a.id));
       })
     );
   }

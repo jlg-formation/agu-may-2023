@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { catchError, finalize, of, switchMap } from 'rxjs';
+import { catchError, delay, finalize, of, switchMap, tap } from 'rxjs';
 import { NewArticle } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
 
@@ -37,10 +37,13 @@ export class AddComponent {
   submit() {
     of(undefined)
       .pipe(
-        switchMap(() => {
+        tap(() => {
           console.log('submit');
           this.errorMsg = '';
           this.isAdding = true;
+        }),
+        delay(300),
+        switchMap(() => {
           const newArticle = this.f.value as NewArticle;
           return this.articleService.add(newArticle);
         }),

@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
-import { Observable, delay, of, tap, throwError } from 'rxjs';
+import { Observable, delay, of, switchMap, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -24,10 +24,14 @@ export class StockComponent {
 
   remove(): Observable<void> {
     return of(undefined).pipe(
-      delay(2000),
-      tap(() => {
+      delay(300),
+      switchMap(() => {
         console.log('remove');
-        throw new Error('Suppression impossible');
+        const ids = [...this.selectedArticles].map((a) => a.id);
+        return this.articleService.remove(ids);
+      }),
+      switchMap(() => {
+        return this.articleService.refresh();
       })
     );
   }

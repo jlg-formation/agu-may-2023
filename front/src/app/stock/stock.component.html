@@ -2,7 +2,11 @@
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
-      <app-async-btn title="Rafraîchir" [icon]="faRotateRight"></app-async-btn>
+      <app-async-btn
+        title="Rafraîchir"
+        [icon]="faRotateRight"
+        (error)="setErrorMsg($event)"
+      ></app-async-btn>
       <a routerLink="add" class="button" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>
       </a>
