@@ -19,6 +19,9 @@ export class ArticleService {
     return of(undefined).pipe(
       delay(2000),
       tap(() => {
+        if (newArticle.name === 'Trucxxx') {
+          throw new Error(`Oups... Trucxxx interdit...`);
+        }
         const article: Article = { ...newArticle, id: generateId() };
         this.articles.push(article);
       })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { finalize, of, switchMap } from 'rxjs';
+import { catchError, finalize, of, switchMap } from 'rxjs';
 import { NewArticle } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
 
@@ -24,6 +24,7 @@ export class AddComponent {
   faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   isAdding = false;
+  errorMsg = '';
 
   constructor(
     private router: Router,
@@ -38,6 +39,7 @@ export class AddComponent {
       .pipe(
         switchMap(() => {
           console.log('submit');
+          this.errorMsg = '';
           this.isAdding = true;
           const newArticle = this.f.value as NewArticle;
           return this.articleService.add(newArticle);
@@ -47,6 +49,11 @@ export class AddComponent {
         }),
         switchMap(() => {
           return this.router.navigate(['..'], { relativeTo: this.route });
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          this.errorMsg = err.message;
+          return of(undefined);
         }),
         finalize(() => {
           this.isAdding = false;
