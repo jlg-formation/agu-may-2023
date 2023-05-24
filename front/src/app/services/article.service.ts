@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Article, NewArticle } from '../interfaces/article';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, delay, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,7 @@ export class ArticleService {
 
   add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
+      delay(2000),
       tap(() => {
         const article: Article = { ...newArticle, id: generateId() };
         this.articles.push(article);
