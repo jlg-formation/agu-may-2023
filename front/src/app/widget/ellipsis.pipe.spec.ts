@@ -15,6 +15,11 @@ describe('EllipsisPipe', () => {
     const result = pipe.transform('coucou', 3);
     expect(result).toBe('cou...');
   });
+  it('should return coucou', () => {
+    const pipe = new EllipsisPipe();
+    const result = pipe.transform('coucou');
+    expect(result).toBe('coucou');
+  });
   it('should return an error', () => {
     const pipe = new EllipsisPipe();
     let shouldGoHere = false;
