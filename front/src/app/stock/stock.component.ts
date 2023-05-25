@@ -1,26 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  faRotateRight,
+  faCircleNotch,
   faPlus,
+  faRotateRight,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { Observable, delay, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
-import { Observable, delay, of, switchMap, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss'],
 })
-export class StockComponent {
+export class StockComponent implements OnInit {
   errorMsg = '';
+  faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
 
   constructor(protected articleService: ArticleService) {}
+
+  ngOnInit(): void {
+    if (this.articleService.articles$.value === undefined) {
+      this.refresh().subscribe();
+    }
+  }
 
   refresh(): Observable<void> {
     return of(undefined).pipe(

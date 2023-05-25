@@ -6,12 +6,9 @@ import { Article, NewArticle } from '../interfaces/article';
   providedIn: 'root',
 })
 export class ArticleService {
-  private articles: Article[] = [
-    { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-    { id: 'a2', name: 'Marteau', price: 8, qty: 23 },
-  ];
+  private articles: Article[] = [];
 
-  articles$ = new BehaviorSubject<Article[]>(this.articles);
+  articles$ = new BehaviorSubject<Article[] | undefined>(undefined);
 
   constructor() {}
 
