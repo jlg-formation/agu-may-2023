@@ -1,4 +1,3 @@
-import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import serveIndex from "serve-index";
 import { api } from "./api";
@@ -11,7 +10,10 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.use(logger);
 
