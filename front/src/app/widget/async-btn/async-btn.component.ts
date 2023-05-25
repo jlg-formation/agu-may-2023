@@ -15,13 +15,13 @@ export class AsyncBtnComponent {
   icon: IconDefinition = faCircleNotch;
 
   @Input()
-  title: string = '';
+  title = '';
 
   @Input()
   action: Observable<void> = of(undefined);
 
   @Output()
-  error = new EventEmitter<string>();
+  actionError = new EventEmitter<string>();
 
   isRunning = false;
 
@@ -32,12 +32,12 @@ export class AsyncBtnComponent {
       .pipe(
         switchMap(() => {
           this.isRunning = true;
-          this.error.emit('');
+          this.actionError.emit('');
           return this.action;
         }),
         catchError((err) => {
           console.log('err: ', err);
-          this.error.emit(err.message);
+          this.actionError.emit(err.message);
           return of(undefined);
         }),
         finalize(() => {

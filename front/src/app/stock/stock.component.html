@@ -5,7 +5,7 @@
       <app-async-btn
         title="Rafraîchir"
         [icon]="faRotateRight"
-        (error)="setErrorMsg($event)"
+        (actionError)="setErrorMsg($event)"
         [action]="refresh()"
       ></app-async-btn>
       <a routerLink="add" class="button" title="Ajouter">
@@ -16,7 +16,7 @@
         [icon]="faTrashAlt"
         [hidden]="selectedArticles.size === 0"
         [action]="remove()"
-        (error)="setErrorMsg($event)"
+        (actionError)="setErrorMsg($event)"
       ></app-async-btn>
     </nav>
     <div class="error">

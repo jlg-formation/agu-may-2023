@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ArticleService } from './article.service';
-import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Article, NewArticle } from '../interfaces/article';
+import { Injectable } from '@angular/core';
+import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Article, NewArticle } from '../interfaces/article';
+import { ArticleService } from './article.service';
 
 const url = environment.articleApiOrigin + '/api/articles';
 
