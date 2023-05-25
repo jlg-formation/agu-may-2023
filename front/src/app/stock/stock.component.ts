@@ -32,6 +32,9 @@ export class StockComponent implements OnInit {
 
   load(): Observable<void> {
     return of(undefined).pipe(
+      tap(() => {
+        this.setErrorMsg('');
+      }),
       delay(300),
       switchMap(() => {
         return this.articleService.refresh();
