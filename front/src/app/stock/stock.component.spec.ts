@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 import { StockComponent } from './stock.component';
+import { WidgetModule } from '../widget/widget.module';
 
 describe('StockComponent', () => {
   let component: StockComponent;
@@ -8,7 +10,8 @@ describe('StockComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [StockComponent]
+      imports: [WidgetModule, FontAwesomeTestingModule],
+      declarations: [StockComponent],
     });
     fixture = TestBed.createComponent(StockComponent);
     component = fixture.componentInstance;
