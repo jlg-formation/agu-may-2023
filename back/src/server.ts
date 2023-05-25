@@ -1,7 +1,5 @@
-import express from "express";
-import { NextFunction } from "express";
-import { Response } from "express";
-import { Request } from "express";
+import cors from "cors";
+import express, { NextFunction, Request, Response } from "express";
 import serveIndex from "serve-index";
 import { api } from "./api";
 
@@ -12,6 +10,8 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
   console.log("req: ", req.url, req.method);
   next();
 };
+
+app.use(cors());
 
 app.use(logger);
 
