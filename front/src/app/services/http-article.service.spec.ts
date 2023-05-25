@@ -5,6 +5,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { catchError, of } from 'rxjs';
 
 describe('HttpArticleService', () => {
   let service: HttpArticleService;
@@ -32,5 +33,22 @@ describe('HttpArticleService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush([]);
     expect(service).toBeTruthy();
+  }));
+
+  it('should refresh in error', fakeAsync(() => {
+    let shouldGoHere = false;
+    service
+      .refresh()
+      .pipe(
+        catchError(() => {
+          shouldGoHere = true;
+          return of(undefined);
+        })
+      )
+      .subscribe();
+    const req = ctrl.expectOne(url);
+    expect(req.request.method).toEqual('GET');
+    req.flush('', { status: 500, statusText: 'Internal Error' });
+    expect(shouldGoHere).toBe(true);
   }));
 });
