@@ -3,8 +3,9 @@ import { ArticleService } from './article.service';
 import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Article } from '../interfaces/article';
+import { environment } from 'src/environments/environment';
 
-const url = '/api/articles';
+const url = environment.articleApiOrigin + '/api/articles';
 
 @Injectable({
   providedIn: 'root',
