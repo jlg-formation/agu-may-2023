@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
-const url = environment.articleApiOrigin + '/api/articles';
+export const url = environment.articleApiOrigin + '/api/articles';
 
 @Injectable({
   providedIn: 'root',
