@@ -37,4 +37,8 @@ npm run build
 
 Open a browser with `http://localhost:3000`.
 
+## Others (test, etc.)
+
+[See the Angular README.md](./front/README.md)
+
 # End
