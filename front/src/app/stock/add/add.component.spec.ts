@@ -1,9 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 
 import { AddComponent } from './add.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { throwError } from 'rxjs';
 
 describe('AddComponent', () => {
   let component: AddComponent;
@@ -26,4 +32,21 @@ describe('AddComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should submit', fakeAsync(() => {
+    component.submit();
+    tick(300);
+    expect(component).toBeTruthy();
+  }));
+
+  it('should submit in error', fakeAsync(() => {
+    component['articleService'].refresh = () => {
+      return throwError(() => {
+        return new Error('oups');
+      });
+    };
+    component.submit();
+    tick(300);
+    expect(component).toBeTruthy();
+  }));
 });
