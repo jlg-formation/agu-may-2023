@@ -5,7 +5,7 @@ import {
   faRotateRight,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, delay, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, delay, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -26,8 +26,21 @@ export class StockComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.articleService.articles$.value === undefined) {
-      this.refresh().subscribe();
+      this.load().subscribe();
     }
+  }
+
+  load(): Observable<void> {
+    return of(undefined).pipe(
+      delay(300),
+      switchMap(() => {
+        return this.articleService.refresh();
+      }),
+      catchError((err) => {
+        this.setErrorMsg(err.message);
+        return of(undefined);
+      })
+    );
   }
 
   refresh(): Observable<void> {

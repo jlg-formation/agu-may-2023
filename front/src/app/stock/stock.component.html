@@ -32,7 +32,10 @@
       </thead>
       <tbody>
         <tr
-          *ngIf="(articleService.articles$ | async) === undefined; else loaded"
+          *ngIf="
+            (articleService.articles$ | async) === undefined && errorMsg === '';
+            else loaded
+          "
         >
           <td colspan="3">
             <div class="loading">
