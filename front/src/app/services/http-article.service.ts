@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
 import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Article } from '../interfaces/article';
+import { Article, NewArticle } from '../interfaces/article';
 import { environment } from 'src/environments/environment';
 
 const url = environment.articleApiOrigin + '/api/articles';
@@ -28,6 +28,18 @@ export class HttpArticleService extends ArticleService {
       map((articles) => {
         this.articles$.next(articles);
         return;
+      })
+    );
+  }
+
+  override add(newArticle: NewArticle): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => {
+        return this.http.post<void>(url, newArticle);
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        throw new Error('Erreur Technique');
       })
     );
   }
